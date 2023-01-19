@@ -1,0 +1,13 @@
+pc-width= 1024px // PC
+tab-width= 768px // タブレット
+sp-width= 480px  // スマホ
+
+pc()
+  @media screen and (max-width: pc-width)
+    {block}
+tab()
+  @media screen and (max-width: tab-width)
+    {block}
+sp()
+  @media screen and (max-width: sp-width)
+    {block}

@@ -1,52 +1,119 @@
-import MyButton from './Button.vue';
-
-// More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
+import Button from "../components/Button.vue"
+import ButtonGroup from "../components/ButtonGroup.vue"
 export default {
-  title: 'Example/Button',
-  component: MyButton,
-  // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
-  argTypes: {
-    backgroundColor: { control: 'color' },
-    onClick: {},
-    size: {
+  title: 'Button',
+  component: Button,
+  // TemplateにbindするargsのTypeを設定する
+  argTypes : {
+    tagType :{
+      control: { type: 'inline-radio' },
+      options: ['button', 'anker'],
+      defaultValue:'button',
+    },
+    type: {
       control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
+      options: ['save', 'cancel', 'return', 'delete', 'edit', 'add', 'search', 'pdf'],
+      defaultValue:'delete',
+    },
+    label: { control: 'text' },
+    iconName: { control: 'text' },
+    composition: {
+      control: { type: 'select' },
+      options: ['prefix-icon', 'suffix-icon', 'onlyText', 'onlyIcon'],
+      table: {
+        defaultValue: {
+          summary: 'onlyText',
+        },
+      },
+    },
+    isSmall: {
+      control: 'boolean',
+      table: {
+        defaultValue: {
+          summary: 'false',
+        },
+      },
+    },
+    isDisabled: {
+      control: 'boolean',
+      table: {
+        defaultValue: {
+          summary: 'false',
+        },
+      },
+    },
+    isDisabled: {
+      control: 'boolean',
+      table: {
+        defaultValue: {
+          summary: 'false',
+        },
+      },
     },
   },
 };
 
-// More on component templates: https://storybook.js.org/docs/vue/writing-stories/introduction#using-args
-const Template = (args) => ({
-  // Components used in your story `template` are defined in the `components` object
-  components: { MyButton },
-  // The story's `args` need to be mapped into the template through the `setup()` method
+// コンポーネントにargsを渡してTemplateを設定する
+const SingleButtonTemplate = (args) => ({
+  components: { Button },
+  // SingleButtonにbindするargsのデフォルト値を設定する
   setup() {
-    return { args };
+    return { 
+      args
+     };
   },
-  // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<my-button v-bind="args" />',
+  template: '<Button v-bind="args"/>',
 });
 
-export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Primary.args = {
-  primary: true,
-  label: 'Button',
-};
+// TemplateにControlesの値をbindする
+export const SingleButton = SingleButtonTemplate.bind({});
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
-};
+// bind後にデフォルト値を設定する
+SingleButton.args = {
+  label: "ボタン",
+  iconName:"delete",
+  tagType:"anker",
+  type:"delete"
+}
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
-};
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  label: 'Button',
-};
+const ButtonGroupTemplate = (args) => ({
+  components: { ButtonGroup },
+  setup() {
+    return { 
+      args :  [
+        { label: '保存', type: 'save', iconName: 'save',tagType:"anker" },
+        {
+          label: 'キャンセル',
+          type: 'cancel',
+          iconName: 'close',
+          tagType:"button"
+        },
+        {
+          label: '戻る',
+          type: 'return',
+          iconName: 'Aarrow-left',
+          tagType:"button"
+        },
+        { label: '削除', type: 'delete', iconName: 'delete',tagType:"button" },
+        { label: '編集', type: 'edit', iconName: 'edit',tagType:"button" },
+        { label: '新規', type: 'add', iconName: 'plus2',tagType:"button" },
+        {
+          label: '検索',
+          type: 'search',
+          iconName: 'search',
+          tagType:"button"
+        },
+        {
+          label: 'PDF出力',
+          type: 'pdf',
+          iconName: 'file-pdf',
+          tagType:"button"
+        },
+      ] 
+  };
+  },
+  template: '<ButtonGroup :argsArray="args"/>',
+});
+
+export const Buttons = ButtonGroupTemplate.bind({});
