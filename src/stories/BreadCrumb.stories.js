@@ -2,7 +2,6 @@ import BreadCrumb from '../components/BreadCrumb.vue';
 export default {
   title: 'BreadCrumb',
   component: BreadCrumb,
-  
 };
 
 const Template = (args) => ({
